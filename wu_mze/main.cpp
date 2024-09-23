@@ -304,10 +304,45 @@ int generate_path() {
 		}
 	}
 	
+	if (current_pos.y == 0) {//위벽에 붙음
+		int step = 0;
+		while (current_pos.y < MAX-1 && current_pos.x < MAX-1) {
+			switch (step % 2)
+			{
+			case 0:
+				vector = 2;
+				walk_count = 0;
+				walk = rand() % 5 + 1;
+				while (walk_count < walk && !check_obstacle(current_pos, vector) && !check_corner(current_pos, vector)) {
+					V_counter[vector] = 1;
+					current_pos.x++;
+					board[current_pos.y][current_pos.x] = 1;
+					walk_count++;
+				}
+				step++;
+				break;
+			case 1:
+				vector = 3;
+				walk_count = 0;
+				walk = rand() % 5 + 1;
+				while (walk_count < walk && !check_obstacle(current_pos, vector) && !check_corner(current_pos, vector)) {
+					V_counter[vector] = 1;
+					current_pos.y++;
+					board[current_pos.y][current_pos.x] = 1;
+					walk_count++;
+				}
+				step++;
+				break;
+			default:
+				break;
+			}
+		}
+	}
+
 	if (current_pos.y >= MAX - 1) {//아래벽에 붙음
 		int step = 0;
 		int sec_walk;
-		while (current_pos.y < MAX && current_pos.x < MAX-1) {
+		while (current_pos.y < MAX && current_pos.x < MAX - 1) {
 			switch (step % 4)
 			{
 			case 0:
@@ -364,46 +399,11 @@ int generate_path() {
 			}
 		}
 	}
-	
-	
-	if (current_pos.y == 0) {//위벽에 붙음
-		int step = 0;
-		while (current_pos.y < MAX-1 && current_pos.x < MAX-1) {
-			switch (step % 2)
-			{
-			case 0:
-				vector = 2;
-				walk_count = 0;
-				walk = rand() % 5 + 1;
-				while (walk_count < walk && !check_obstacle(current_pos, vector) && !check_corner(current_pos, vector)) {
-					V_counter[vector] = 1;
-					current_pos.x++;
-					board[current_pos.y][current_pos.x] = 1;
-					walk_count++;
-				}
-				step++;
-				break;
-			case 1:
-				vector = 3;
-				walk_count = 0;
-				walk = rand() % 5 + 1;
-				while (walk_count < walk && !check_obstacle(current_pos, vector) && !check_corner(current_pos, vector)) {
-					V_counter[vector] = 1;
-					current_pos.y++;
-					board[current_pos.y][current_pos.x] = 1;
-					walk_count++;
-				}
-				step++;
-				break;
-			default:
-				break;
-			}
-		}
-	}
+
 	if (current_pos.x >= MAX - 1) {//오른벽에 붙음
 		int step = 0;
 		int sec_walk;
-		while (current_pos.y < MAX-1 && current_pos.x < MAX-1) {
+		while (current_pos.y < MAX - 1&& current_pos.x < MAX) {
 			switch (step % 4)
 			{
 			case 0:
@@ -475,7 +475,8 @@ int generate_path() {
 			break;
 		}
 	}
-	if (current_pos.x >= MAX - 1) {//다 와서 아래벽에 붙음
+	
+	if (current_pos.y >= MAX - 1) {//다 와서 아래벽에 붙음
 		while (current_pos.x < MAX - 1) {
 			vector = 2;
 			walk_count = 0;
